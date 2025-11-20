@@ -1,8 +1,6 @@
 #EXTM3U
 #EXTINF:0 tvg-country="SN" tvg-logo="" group-title="Undefined",2STV
 http://69.64.57.208/2stv/playlist.m3u8?checkedby:iptvcat.com
-#EXTINF:0 tvg-country="SN" tvg-logo="" group-title="Undefined",Islam TV Sénégal (720p)
-https://tv.imediasn.com/hls/live.m3u8?checkedby:iptvcat.com
 #EXTINF:0 tvg-country="SN" tvg-logo="" group-title="Undefined",RTS 1 (720p)
 http://69.64.57.208/rts1/playlist.m3u8?checkedby:iptvcat.com
 #EXTINF:0 tvg-country="SN" tvg-logo="" group-title="Undefined",RTS 2 (720p)
