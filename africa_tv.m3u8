@@ -7,8 +7,6 @@ http://69.64.57.208/rts1/playlist.m3u8?checkedby:iptvcat.com
 http://69.64.57.208/rts2/playlist.m3u8?checkedby:iptvcat.com
 #EXTINF:0 tvg-country="SN" tvg-logo="" group-title="Undefined",Sen TV (360p)
 http://69.64.57.208/sentv/playlist.m3u8?checkedby:iptvcat.com
-#EXTINF:0 tvg-country="SN" tvg-logo="" group-title="Undefined",TFM (720p)
-https://raw.githubusercontent.com/azgaresncf/strm2hls/main/streams/TFM.m3u8?checkedby:iptvcat.com
 #EXTINF:0 tvg-country="SN" tvg-logo="" group-title="Undefined",Walf TV (480p)
 https://live3.acangroup.org:1929/publiclive/walftv.stream/chunks.m3u8?checkedby:iptvcat.com
 #EXTINF:0 tvg-country="ML" tvg-logo="" group-title="Undefined",D3 TV
