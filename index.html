@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Energy & Smart Systems (ESS)</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #64ffda;
+            --dark-bg: #0a192f;
+            --light-bg: #112240;
+            --text-color: #ccd6f6;
+            --light-text-color: #8892b0;
+        }
+        body {
+            font-family: 'Exo 2', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-color);
+        }
+        .navbar {
+            transition: background-color 0.3s ease;
+            background-color: transparent;
+        }
+        .navbar.scrolled {
+            background-color: rgba(10, 25, 47, 0.85);
+            backdrop-filter: blur(10px);
+        }
+        .navbar-brand img {
+            height: 80px;
+        }
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(100, 255, 218, 0.8)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        }
+        .nav-link {
+            color: var(--text-color) !important;
+            font-weight: 400;
+            transition: color 0.3s;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: var(--primary-color) !important;
+        }
+        .hero {
+            background: linear-gradient(rgba(10, 25, 47, 0.7), rgba(10, 25, 47, 0.7)), url('image/ChatGPT Image 15 nov. 2025, 23_48_50.png') no-repeat center center;
+            background-size: cover;
+            padding: 12rem 0;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+        .hero .display-4 {
+            color: #fff;
+        }
+        .btn-primary {
+            background-color: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 12px 30px;
+            transition: all 0.3s;
+        }
+        .btn-primary:hover {
+            background-color: var(--primary-color);
+            color: var(--dark-bg);
+        }
+        .section {
+            padding: 5rem 0;
+        }
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+            font-weight: 700;
+            color: #fff;
+            position: relative;
+        }
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background-color: var(--primary-color);
+            margin: 10px auto 0;
+        }
+        .card {
+            background-color: var(--light-bg);
+            border: 1px solid #1d2d50;
+            transition: transform 0.3s, box-shadow 0.3s;
+            color: var(--text-color);
+        }
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 20px rgba(100, 255, 218, 0.2);
+        }
+        .card-title {
+            color: var(--primary-color);
+        }
+        .footer {
+            background-color: var(--light-bg);
+            padding: 3rem 0;
+            margin-top: 4rem;
+            color: var(--light-text-color);
+        }
+        #contact input, #contact textarea {
+            background-color: var(--light-bg);
+            border: 1px solid #1d2d50;
+            color: var(--text-color);
+        }
+        #contact input::placeholder, #contact textarea::placeholder {
+            color: var(--light-text-color);
+        }
+        #contact input:focus, #contact textarea:focus {
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            box-shadow: 0 0 10px rgba(100, 255, 218, 0.2);
+            border-color: var(--primary-color);
+        }
+        .testimonial-card {
+            background-color: var(--light-bg);
+            border: 1px solid #1d2d50;
+            padding: 2rem;
+        }
+        .partner-logo {
+            height: 40px;
+            filter: grayscale(100%) brightness(150%);
+            transition: all 0.3s;
+            opacity: 0.7;
+        }
+        .partner-logo:hover { filter: none; opacity: 1; }
+        .certification-logo {
+            height: 55px;
+            filter: brightness(1.5);
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <!-- React & Babel CDN -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // --- DATA ---
+        const mainServices = [
+            { title: "Installation IRVE (Bornes de Recharge)", icon: "bi-ev-station-fill", description: "Installez votre borne en toute sécurité et bénéficiez des aides de l'État pour la recharge de votre véhicule électrique." },
+            { title: "Rénovation de Tableau Électrique", icon: "bi-kanban-fill", description: "Sécurisez votre foyer et prévenez les risques avec une installation neuve ou une mise aux normes complète de votre tableau." },
+            { title: "Domotique & Maison Intelligente", icon: "bi-house-gear-fill", description: "Contrôlez éclairage, chauffage et sécurité depuis votre smartphone pour plus de confort et d'économies." },
+            { title: "Audit Électrique (Smart Audit)", icon: "bi-clipboard-data-fill", description: "Évaluez la conformité de votre installation et identifiez les solutions pour réduire votre consommation d'énergie." },
+            { title: "Systèmes de Sécurité", icon: "bi-shield-lock-fill", description: "Protégez vos biens et vos proches avec nos solutions de vidéosurveillance, alarmes anti-intrusion et contrôles d'accès." },
+            { title: "Sécurité Incendie", icon: "bi-fire", description: "Installation et maintenance de détecteurs de fumée, alarmes et systèmes de désenfumage conformes aux normes." },
+            { title: "Projets ENEDIS & Copropriétés", icon: "bi-building-fill-gear", description: "Accompagnement complet des syndics pour les projets de rénovation énergétique et les raccordements ENEDIS." }
+        ];
+
+        const testimonials = [
+            { name: "Julien P.", project: "Rénovation électrique complète", stars: 5, text: "Un travail impeccable et une équipe très professionnelle. L'audit a permis d'identifier des points critiques et la nouvelle installation est parfaite. Je recommande vivement." },
+            { name: "Syndic Le Panorama", project: "Installation bornes IRVE", stars: 5, text: "ESS a géré l'installation de 10 bornes de recharge dans notre copropriété. Le projet a été mené de A à Z avec une grande rigueur et dans le respect des délais." },
+            { name: "Marie L.", project: "Intégration domotique", stars: 4, text: "Mon appartement est maintenant entièrement connecté. La prise en main a été simple grâce aux explications claires. Un petit retard sur la livraison mais le résultat est là." }
+        ];
+        // --- COMPONENTS ---
+
+        const Header = ({ isScrolled }) => (
+            <nav className={`navbar navbar-expand-lg fixed-top ${isScrolled ? 'scrolled shadow-lg' : ''}`}>
+                <div className="container">
+                    <a className="navbar-brand" href="#home">
+                        <img src={'image/logo/Logo_Legrand.svg'} alt="ESS Logo" />
+                    </a>
+                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" style={{borderColor: 'rgba(100, 255, 218, 0.5)'}}>
+                        <span className="navbar-toggler-icon" />
+                    </button>
+                    <div className="collapse navbar-collapse" id="navbarNav">
+                        <ul className="navbar-nav ms-auto">
+                            <li className="nav-item"><a className="nav-link" href="#home">Accueil</a></li>
+                            <li className="nav-item"><a className="nav-link" href="#services">Prestations</a></li>
+                            <li className="nav-item"><a className="nav-link" href="#about">À Propos</a></li>
+                            <li className="nav-item"><a className="nav-link" href="#contact">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        );
+
+        const Footer = () => (
+            <footer className="footer text-center">
+                <div className="container">
+                    <p>&copy; 2025 Energy & Smart Systems. Tous droits réservés.</p>
+                    <p className="opacity-75">Rendre l’énergie plus simple, plus sûre et plus intelligente, pour tous.</p>
+                    <a href="africa_tv.m3u8" download>Télécharger africa_tv.m3u8</a>
+                </div>
+            </footer>
+        );
+
+        const HomePage = () => (
+            <div>
+                <header className="hero text-center d-flex align-items-center">
+                    <div className="container">
+                        <h1 className="display-4 fw-bold">Rendre l’énergie plus simple, plus sûre et plus intelligente.</h1>
+                        <p className="lead my-4" style={{color: 'var(--light-text-color)'}}>Votre partenaire ingénierie pour la transition énergétique et les systèmes connectés.</p>
+                        <a href="#contact" className="btn btn-primary btn-lg">Demander un devis</a>
+                    </div>
+                </header>
+            </div>
+        );
+
+        const MainServicesPage = () => (
+            <section id="services" className="section">
+                <div className="container">
+                    <div className="text-center mb-5">
+                        <h2 className="section-title mb-3">Nos Services d'Électricité & Domotique</h2>
+                        <p className="lead mx-auto" style={{color: 'var(--light-text-color)', maxWidth: '700px'}}>
+                            De la rénovation complète à l'installation de bornes de recharge, nous garantissons sécurité, performance et économies d'énergie.
+                        </p>
+                        {/* Placeholder pour les certifications */}
+                        <div className="mt-4 d-flex justify-content-center align-items-center">
+                            <img src="image/logo/irve.png" alt="Certification RGE Qualifelec IRVE" className="certification-logo" style={{height: '65px'}} />
+                            <img src="image/logo/qualifelec.png" alt="Certification Qualifelec" className="certification-logo" />
+                        </div>
+                    </div>
+                    <div className="row g-4 justify-content-center">
+                        {mainServices.map(service => (
+                            <div className="col-md-6 col-lg-4 d-flex align-items-stretch" key={service.title}>
+                                <div className="card w-100 text-center p-4">
+                                    <div className="card-body d-flex flex-column">
+                                        <i className={`bi ${service.icon} fs-1 mb-3`} style={{color: 'var(--primary-color)'}}></i>
+                                        <h5 className="card-title fw-bold">{service.title}</h5>
+                                        <p className="card-text flex-grow-1" style={{color: 'var(--light-text-color)'}}>{service.description}</p>
+                                        <a href="#contact" className="btn btn-outline-primary mt-auto">En savoir plus</a>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                    <div className="text-center mt-5"><a href="#contact" className="btn btn-primary btn-lg">Demander un Devis Gratuit</a></div>
+                </div>
+            </section>
+        );
+
+        const TestimonialsPage = () => (
+            <section id="testimonials" className="section">
+                <div className="container">
+                    <h2 className="section-title">Avis Clients & Partenaires</h2>
+                    <div className="row g-4 mb-5">
+                        {testimonials.map(testimonial => (
+                            <div className="col-lg-4 d-flex align-items-stretch" key={testimonial.name}>
+                                <div className="testimonial-card rounded w-100">
+                                    <div className="d-flex justify-content-between align-items-center mb-3">
+                                        <div>
+                                            <h6 className="mb-0" style={{color: 'var(--text-color)'}}>{testimonial.name}</h6>
+                                            <small style={{color: 'var(--light-text-color)'}}>{testimonial.project}</small>
+                                        </div>
+                                        <div style={{color: '#ffc107'}}>
+                                            {[...Array(testimonial.stars)].map((_, i) => <i key={i} className="bi bi-star-fill"></i>)}
+                                            {[...Array(5 - testimonial.stars)].map((_, i) => <i key={i} className="bi bi-star"></i>)}
+                                        </div>
+                                    </div>
+                                    <p className="mb-0 fst-italic" style={{color: 'var(--light-text-color)'}}>"{testimonial.text}"</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                    <div className="row justify-content-center align-items-center g-5 text-center mt-5">
+                        <div className="col-6 col-md-3 col-lg-2"><img src="image/logo/Logo_Legrand.svg" className="partner-logo" alt="Legrand Logo" /></div>
+                        <div className="col-6 col-md-3 col-lg-2"><img src="image/logo/Somfy_logo.svg" className="partner-logo" alt="Somfy Logo" /></div>
+                        <div className="col-6 col-md-3 col-lg-2"><img src="image/logo/logo-enedis.png" className="partner-logo" alt="Enedis Logo" /></div>
+                        <div className="col-6 col-md-3 col-lg-2"><img src="image/logo/ajaxpartner.webp" className="partner-logo" alt="Ajax Systems Logo" /></div>
+                        <div className="col-6 col-md-3 col-lg-2"><img src="image/logo/knx.png" className="partner-logo" alt="KNX Partner Logo" /></div>
+                    </div>
+                </div>
+            </section>
+        );
+
+        const AboutPage = () => (
+            <section id="about" className="section" style={{backgroundColor: 'var(--light-bg)'}}>
+                <div className="container">
+                    <h2 className="section-title">Notre Vision</h2>
+                    <div className="row justify-content-center">
+                        <div className="col-md-8 text-center">
+                            <h3 style={{color: 'var(--primary-color)'}} className="mb-3">Une approche unique, centrée sur l'excellence.</h3>
+                            <p className="lead" style={{color: 'var(--light-text-color)'}}>
+                                ESS se distingue par une méthodologie rigoureuse qui garantit performance, fiabilité et intelligence pour chaque projet.
+                            </p>
+                            <div className="mt-4">
+                                <div className="d-flex align-items-start mb-3">
+                                    <i className="bi bi-graph-up-arrow fs-4 me-3" style={{color: 'var(--primary-color)'}}></i>
+                                    <div>
+                                        <h6 className="fw-bold mb-1 text-start" style={{color: 'var(--text-color)'}}>Performance Énergétique</h6>
+                                        <small className="text-start d-block" style={{color: 'var(--light-text-color)'}}>Optimiser votre consommation pour réduire les coûts et l'impact environnemental.</small>
+                                    </div>
+                                </div>
+                                <div className="d-flex align-items-start mb-3">
+                                    <i className="bi bi-shield-check fs-4 me-3" style={{color: 'var(--primary-color)'}}></i>
+                                    <div>
+                                        <h6 className="fw-bold mb-1 text-start" style={{color: 'var(--text-color)'}}>Fiabilité & Sécurité</h6>
+                                        <small className="text-start d-block" style={{color: 'var(--light-text-color)'}}>Concevoir des installations robustes, conformes aux normes les plus strictes.</small>
+                                    </div>
+                                </div>
+                                <div className="d-flex align-items-start">
+                                    <i className="bi bi-lightbulb fs-4 me-3" style={{color: 'var(--primary-color)'}}></i>
+                                    <div>
+                                        <h6 className="fw-bold mb-1 text-start" style={{color: 'var(--text-color)'}}>Intégration Intelligente</h6>
+                                        <small className="text-start d-block" style={{color: 'var(--light-text-color)'}}>Créer des systèmes connectés intuitifs qui simplifient votre quotidien.</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        );
+
+        const ContactPage = () => (
+            <section id="contact" className="section">
+                <div className="container">
+                    <h2 className="section-title">Contactez-nous</h2>
+                    <div className="row">
+                        <div className="col-md-8 mx-auto">
+                            <p className="text-center mb-4" style={{color: 'var(--light-text-color)'}}>Pour toute question ou demande de devis, remplissez le formulaire ci-dessous. Notre équipe vous répondra dans les plus brefs délais.</p>
+                            <form onSubmit={(e) => e.preventDefault()}>
+                                <div className="mb-3"><input type="text" className="form-control" placeholder="Votre nom" /></div>
+                                <div className="mb-3"><input type="email" className="form-control" placeholder="Votre email" /></div>
+                                <div className="mb-3"><textarea className="form-control" rows="5" placeholder="Votre message"></textarea></div>
+                                <div className="text-center"><button type="submit" className="btn btn-primary">Envoyer le Message</button></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        );
+
+        const FloatingCTA = () => (
+            <a href="https://wa.me/33699331743" // Remplacez par votre numéro
+               className="btn btn-success position-fixed rounded-circle p-3 lh-1" 
+               style={{ bottom: '20px', right: '20px', zIndex: 2000, fontSize: '1.5rem' }}
+               target="_blank" rel="noopener noreferrer">
+                <i className="bi bi-whatsapp"></i>
+            </a>
+        );
+
+        // --- MAIN APP ---
+        const App = () => {
+            const [route, setRoute] = useState(window.location.hash || '#home');
+            const [isScrolled, setIsScrolled] = useState(false);
+
+            useEffect(() => {
+                const handleScroll = () => {
+                    setIsScrolled(window.scrollY > 50);
+                };
+                const handleHashChange = () => {
+                    setRoute(window.location.hash || '#home');
+                    window.scrollTo(0, 0);
+                };
+                window.addEventListener('scroll', handleScroll);
+                window.addEventListener('hashchange', handleHashChange);
+                return () => {
+                    window.removeEventListener('scroll', handleScroll);
+                    window.removeEventListener('hashchange', handleHashChange);
+                };
+            }, []);
+
+            const renderPage = () => {
+                switch (route) {
+                    case '#services': return <MainServicesPage />;
+                    case '#about': return <AboutPage />;
+                    case '#contact': return <ContactPage />;
+                    case '#home':
+                    default:
+                        return <HomePage />;
+                }
+            };
+            
+            const isHomePage = route === '#home' || route === '';
+
+            return (
+                <div>
+                    <Header isScrolled={isScrolled} />
+                    <FloatingCTA />
+                    <main>
+                        {isHomePage ? (
+                            <>
+                                <HomePage />
+                                <MainServicesPage />
+                                <AboutPage />
+                                <TestimonialsPage />
+                                <ContactPage />
+                            </>
+                        ) : renderPage()}
+                    </main>
+                    <Footer />
+                </div>
+            );
+        };
+
+        const container = document.getElementById('root');
+        const root = ReactDOM.createRoot(container);
+        root.render(<App />);
+    </script>
+
+</body>
+</html>
